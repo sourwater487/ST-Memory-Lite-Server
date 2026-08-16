@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <title>ST Memory Lite</title>
+    <link rel="stylesheet" href="./dashboard/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <button id="back-button" class="icon-button" type="button" aria-label="返回" hidden>←</button>
+        <button id="home-button" class="wordmark" type="button">Memory Lite</button>
+        <div class="topbar-spacer"></div>
+        <span id="save-state" class="save-state"></span>
+        <button id="settings-button" class="quiet-button" type="button">设置</button>
+    </header>
+
+    <main id="app" class="shell" aria-live="polite"></main>
+
+    <dialog id="settings-dialog" class="settings-dialog">
+        <form id="settings-form" method="dialog">
+            <div class="dialog-head">
+                <div>
+                    <div class="eyebrow">全局配置</div>
+                    <h2>设置</h2>
+                </div>
+                <button id="close-settings" class="icon-button" type="button" aria-label="关闭">×</button>
+            </div>
+
+            <section class="settings-section">
+                <h3>总结 API</h3>
+                <div class="field-grid">
+                    <label>Base URL<input name="summary.baseUrl" autocomplete="off" placeholder="https://api.example.com/v1"></label>
+                    <label>模型<input name="summary.model" autocomplete="off"></label>
+                    <label class="wide">API Key<input name="summary.apiKey" type="password" autocomplete="new-password" placeholder="留空则保持现有 Key"></label>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h3>向量 API</h3>
+                <div class="field-grid">
+                    <label>Base URL<input name="embedding.baseUrl" autocomplete="off" placeholder="https://api.example.com/v1"></label>
+                    <label>模型<input name="embedding.model" autocomplete="off"></label>
+                    <label class="wide">API Key<input name="embedding.apiKey" type="password" autocomplete="new-password" placeholder="留空则保持现有 Key"></label>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="section-title-row">
+                    <h3>Reranker</h3>
+                    <label class="switch-row"><input name="rerankerEnabled" type="checkbox"><span>启用</span></label>
+                </div>
+                <div class="field-grid">
+                    <label>Base URL<input name="reranker.baseUrl" autocomplete="off" placeholder="https://api.example.com/v1"></label>
+                    <label>模型<input name="reranker.model" autocomplete="off"></label>
+                    <label class="wide">API Key<input name="reranker.apiKey" type="password" autocomplete="new-password" placeholder="留空则保持现有 Key"></label>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="section-title-row">
+                    <h3>总结与召回</h3>
+                    <div class="section-title-row">
+                        <label class="switch-row"><input name="queryRewriteEnabled" type="checkbox"><span>查询改写</span></label>
+                        <label class="switch-row"><input name="autoSummary" type="checkbox"><span>自动总结</span></label>
+                    </div>
+                </div>
+                <div class="number-grid">
+                    <label>自动总结间隔（可处理楼层）<input name="autoSummaryMessages" type="number" min="1" max="200"></label>
+                    <label>每段最大字符<input name="summaryChunkChars" type="number" min="2000" max="50000"></label>
+                    <label>历史摘要注入上限<input name="summaryInjectionMaxChars" type="number" min="500" max="30000"></label>
+                    <label>召回候选数<input name="recallCandidateLimit" type="number" min="1" max="100"></label>
+                    <label>最终召回数<input name="recallLimit" type="number" min="1" max="20"></label>
+                    <label>向量最低分<input name="recallMinScore" type="number" min="-1" max="1" step="0.01"></label>
+                    <label>关键词最低分<input name="keywordMinScore" type="number" min="0" max="1" step="0.01"></label>
+                    <label>注入最大字符<input name="recallMaxChars" type="number" min="200" max="20000"></label>
+                    <label>关系扩散条数<input name="relationExpansionLimit" type="number" min="0" max="12"></label>
+                    <label>关系扩散阈值<input name="relationMinScore" type="number" min="0" max="1" step="0.01"></label>
+                    <label>冷却回合<input name="cooldownTurns" type="number" min="0" max="20"></label>
+                    <label>冷却惩罚<input name="cooldownPenalty" type="number" min="0" max="1" step="0.01"></label>
+                    <label>重要性权重<input name="importanceWeight" type="number" min="0" max="0.5" step="0.01"></label>
+                </div>
+                <p class="subtitle" style="margin-top:12px">最近 2 层原文固定保留；手动与自动总结都会在全部处理成功后隐藏已覆盖楼层。</p>
+            </section>
+
+            <div class="dialog-actions">
+                <button id="save-settings" class="primary-button" type="submit">保存设置</button>
+            </div>
+        </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" hidden></div>
+    <script type="module" src="./dashboard/app.js"></script>
+</body>
+</html>
