@@ -5,6 +5,16 @@ const settingsForm = document.querySelector('#settings-form');
 const backButton = document.querySelector('#back-button');
 const saveState = document.querySelector('#save-state');
 const toast = document.querySelector('#toast');
+const returnTarget = (() => {
+    const raw = new URLSearchParams(location.search).get('return');
+    if (!raw) return '/';
+    try {
+        const url = new URL(raw, location.origin);
+        return url.origin === location.origin ? url.href : '/';
+    } catch {
+        return '/';
+    }
+})();
 
 let csrfToken = '';
 let scopes = [];
@@ -43,6 +53,11 @@ function notify(message) {
 
 function setBusy(message = '') {
     saveState.textContent = message;
+}
+
+function exitDashboard() {
+    window.close();
+    setTimeout(() => location.assign(returnTarget), 120);
 }
 
 function characterGroups() {
@@ -360,6 +375,7 @@ backButton.addEventListener('click', () => {
     }
 });
 document.querySelector('#home-button').addEventListener('click', () => setRoute(homeRoute()));
+document.querySelector('#exit-button').addEventListener('click', exitDashboard);
 document.querySelector('#settings-button').addEventListener('click', openSettings);
 document.querySelector('#close-settings').addEventListener('click', () => dialog.close());
 window.addEventListener('popstate', event => renderRoute(event.state || homeRoute()));
