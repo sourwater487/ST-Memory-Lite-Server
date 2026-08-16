@@ -1,0 +1,15 @@
+{
+  "name": "st-memory-lite-server",
+  "version": "0.2.0",
+  "description": "Lightweight isolated plot-memory server plugin for SillyTavern",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "sourwater487",
+  "license": "MIT"
+}
