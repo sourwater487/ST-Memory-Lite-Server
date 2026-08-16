@@ -81,7 +81,7 @@ async function init(router) {
         res.json({
             ok: true,
             plugin: 'st-memory-lite',
-            version: '0.2.0',
+            version: '0.2.1',
             scopes: store.listScopes().length,
             memories: store.listScopes().reduce((sum, item) => sum + item.memoryCount, 0),
         });
